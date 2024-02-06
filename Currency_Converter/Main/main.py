@@ -14,6 +14,8 @@ class MainWindow(qtw.QWidget, Ui_mw_Main):
 
         self.pb_Convert.clicked.connect(self.convert_currency)
 
+        self.le_InputValue.returnPressed.connect(self.convert_currency)
+
         self.le_InputValue.setFocus()
 
         
@@ -87,6 +89,8 @@ class MainWindow(qtw.QWidget, Ui_mw_Main):
         output = round((result["data"][self.cb_OutputCurrency.currentText()]*float(self.get_input_amount())), 2)     #round[OutputCurr x InputAmount), 2]
         output = str(output) + " " + self.cb_OutputCurrency.currentText()       #just formating
         self.le_OutputValue.setText(str(output))
+
+        self.le_InputValue.setFocus()
 
 
         self.l_Message.setNum(status_code)      #Error code
