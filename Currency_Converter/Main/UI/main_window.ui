@@ -217,7 +217,7 @@
       <enum>QFrame::NoFrame</enum>
      </property>
      <property name="text">
-      <string>Message</string>
+      <string>Waiting for input</string>
      </property>
     </widget>
    </item>

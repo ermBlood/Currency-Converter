@@ -1,5 +1,7 @@
 import sys
 import requests
+import json
+from datetime import datetime
 from PySide6 import QtCore as qtc
 from PySide6 import QtWidgets as qtw
 from PySide6 import QtGui as qtg
@@ -12,13 +14,34 @@ class MainWindow(qtw.QWidget, Ui_mw_Main):
         super().__init__()
         self.setupUi(self)
 
-        self.pb_Convert.clicked.connect(self.convert_currency)
+        self.status_code = None
 
-        self.le_InputValue.returnPressed.connect(self.convert_currency)
+        self.pb_Convert.clicked.connect(self.is_input_valid)
+
+        self.le_InputValue.returnPressed.connect(self.is_input_valid)
 
         self.le_InputValue.setFocus()
 
+    
+    def is_input_valid(self):      #check if input value is valid, then call convert method
         
+        self.l_Message.setText("Processing..")
+
+        if self.input_value_mod().strip() == "":
+            self.status_code = "empty_value"
+        
+        elif any(char.isdigit() for char in self.input_value_mod()) == False:
+            self.status_code = "no_digit"
+
+        else:
+            try:
+                self.convert_currency()
+            except:
+                self.status_code = "wrong_format"
+
+        self.get_status()
+
+      
     def input_value_mod(self):
         
         InputValue = self.le_InputValue.text().upper()
@@ -30,6 +53,9 @@ class MainWindow(qtw.QWidget, Ui_mw_Main):
     def get_input_amount(self):
 
         InputValue = self.input_value_mod()
+
+        if InputValue == "":
+            self.status_code = "no_value"            
 
         if self.is_currency_in_input():  # Remove the unnecessary self argument here (??? chat GPT, what???)
             InputValue = InputValue.replace(self.get_input_currency(), "")    # remove currency from it
@@ -83,7 +109,7 @@ class MainWindow(qtw.QWidget, Ui_mw_Main):
 
         print(response)
 
-        status_code = response.status_code
+        self.status_code = response.status_code
         result = response.json()
 
         output = round((result["data"][self.cb_OutputCurrency.currentText()]*float(self.get_input_amount())), 2)     #round[OutputCurr x InputAmount), 2]
@@ -92,10 +118,15 @@ class MainWindow(qtw.QWidget, Ui_mw_Main):
 
         self.le_InputValue.setFocus()
 
+        self.get_status()
 
-        self.l_Message.setNum(status_code)      #Error code
-        
 
+    def get_status(self):
+
+        with open("error_codes.json") as error_codes:
+            error_code = json.load(error_codes)
+
+        self.l_Message.setText(f"{error_code[str(self.status_code)]} at {datetime.now().strftime("%H:%M:%S on %d. %m. %Y")}")
 
 
 

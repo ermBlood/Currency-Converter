@@ -1,0 +1,11 @@
+{
+    "200" : "OK",
+    "403" : "You are not allowed to use this endpoint",
+    "404" : "A requested endpoint does not exist",
+    "422" : "Validation error",
+    "429" : "You have hit your rate limit or your monthly limit",
+    "500" : "Internal Server Error",
+    "empty_value" : "No value has been entered",
+    "no_digit" : "Input value must be digit",
+    "wrong_format" : "Unrecognised value"
+}

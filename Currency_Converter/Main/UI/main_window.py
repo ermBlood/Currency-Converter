@@ -166,6 +166,6 @@ class Ui_mw_Main(object):
 
         self.cb_OutputCurrency.setCurrentText(QCoreApplication.translate("mw_Main", u"EUR", None))
         self.pb_Convert.setText(QCoreApplication.translate("mw_Main", u"Convert", None))
-        self.l_Message.setText(QCoreApplication.translate("mw_Main", u"Message", None))
+        self.l_Message.setText(QCoreApplication.translate("mw_Main", u"Waiting for input", None))
     # retranslateUi
 
