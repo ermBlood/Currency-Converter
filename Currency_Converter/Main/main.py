@@ -1,6 +1,7 @@
 import sys
 import requests
 import json
+import re
 from datetime import datetime
 from PySide6 import QtCore as qtc
 from PySide6 import QtWidgets as qtw
@@ -15,14 +16,114 @@ class MainWindow(qtw.QWidget, Ui_mw_Main):
         self.setupUi(self)
 
         self.status_code = None
+        self.valid_amount = None
+        self.valid_currency = None
 
-        self.pb_Convert.clicked.connect(self.is_input_valid)
+        self.pb_Convert.clicked.connect(self.run)
+        self.le_InputValue.returnPressed.connect(self.run)
 
-        self.le_InputValue.returnPressed.connect(self.is_input_valid)
+        
+    def run(self):
+
+        self.reload()
+        self.input_validating()
+        print(self.valid_amount)
+        print(self.valid_currency)
+
+
+
+    def reload(self):
+
+        print("\nRELOAD\n")
+
+        self.status_code = None
+        self.valid_amount = None
+        self.valid_currency = None
 
         self.le_InputValue.setFocus()
 
     
+    def input_validating(self):
+
+        input_value = self.le_InputValue.text().strip().replace(" ", "").upper()
+        
+
+    #AMOUNT SECTION
+                
+        input_amount = re.split("[^0-9.,]", input_value)
+
+        while "" in input_amount:
+            input_amount.remove("")
+
+
+        if len(input_amount) == 1:
+            self.valid_amount = input_amount[0]
+        else:
+            self.valid_amount = False
+
+        
+        if len(re.findall("[,.]", input_amount[0])) > 0:
+        #is there any of [,.] ?
+
+            #prevention to
+            if len(re.findall(
+                r"^[,.]|"               # ,.1000
+                r"[,.]$|"               # 1000,.
+                #r"[,.][0-9]{1}$|"       # 1,.0
+                r"[.][0-9]{2}+[0-9]|"   # 1.000+
+                r"[,][0-9]{3}+[0-9]|"   # 1,0000+
+                r"[,.][,.]|"            # .. ,,
+                r"[,.][0-9][,.]|"       # ,.0,.
+                r"[,.][0-9]{2}[,.]|"    # ,.00,.
+                r"[.].+[,.]|"           # .+.,
+                r"[,].+[,][0-9]{2}$"    # 1,000,00
+                , input_amount[0])) > 0:
+                self.valid_amount = False
+        
+        
+
+        #1000
+        #1000,00
+        #1000.00
+        #1,000
+        #1,000.00
+
+    #CURRENCY SYMBOL SECTION
+            
+        currency_symbol = re.split("[0-9.,]", input_value)
+            #potencial currency
+        while "" in currency_symbol:
+            currency_symbol.remove("")
+
+        if len(currency_symbol) == 1:
+            self.valid_currency = self.find_currency_by_symbol(currency_symbol)
+        elif len(currency_symbol) > 1:
+            self.valid_currency = False
+           
+
+    def find_currency_by_symbol(self, currency_symbol):
+        # Function to find currency by symbol
+
+        with open("test.json") as file:
+            currency_data = json.load(file)
+
+        for key, values in currency_data.items():
+
+            if currency_symbol[0] in values:
+                return key
+            
+        return False
+            #if currency is not found
+
+
+
+
+        
+
+        
+        
+
+    ''''
     def is_input_valid(self):      #check if input value is valid, then call convert method
         
         self.l_Message.setText("Processing..")
@@ -81,6 +182,9 @@ class MainWindow(qtw.QWidget, Ui_mw_Main):
 
     def get_input_currency(self):
 
+        
+        """
+
         currencies = ["EUR", "USD", "CZK"]
 
         InputValue = self.input_value_mod()
@@ -91,6 +195,12 @@ class MainWindow(qtw.QWidget, Ui_mw_Main):
                 return curr  # Return the found currency (for the get_input_amount)
 
         return ""  # Return an empty string if no currency is found (I don't understand why that's necessary)
+
+        
+        InputValue = self.le_InputValue.text().upper()
+        
+        
+    '''
 
         
     def convert_currency(self):
@@ -108,6 +218,8 @@ class MainWindow(qtw.QWidget, Ui_mw_Main):
         response = requests.request("GET", url, headers=headers, data = payload)
 
         print(response)
+
+        print(response.json())
 
         self.status_code = response.status_code
         result = response.json()
