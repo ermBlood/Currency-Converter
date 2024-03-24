@@ -5,7 +5,6 @@
     "422" : "Validation error",
     "429" : "You have hit your rate limit or your monthly limit",
     "500" : "Internal Server Error",
-    "empty_value" : "No value has been entered",
-    "no_digit" : "Input value must be digit",
-    "wrong_format" : "Unrecognised value"
+    "invalid_amount" : "Invalid amount",
+    "invalid_currency" : "Invalid currency"
 }

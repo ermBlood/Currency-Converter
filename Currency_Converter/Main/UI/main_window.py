@@ -49,9 +49,6 @@ class Ui_mw_Main(object):
         self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label)
 
         self.cb_InputCurrency = QComboBox(self.groupBox)
-        self.cb_InputCurrency.addItem("")
-        self.cb_InputCurrency.addItem("")
-        self.cb_InputCurrency.addItem("")
         self.cb_InputCurrency.setObjectName(u"cb_InputCurrency")
 
         self.formLayout.setWidget(1, QFormLayout.LabelRole, self.cb_InputCurrency)
@@ -101,9 +98,6 @@ class Ui_mw_Main(object):
         self.formLayout_2.setWidget(3, QFormLayout.SpanningRole, self.le_OutputValue)
 
         self.cb_OutputCurrency = QComboBox(self.groupBox_2)
-        self.cb_OutputCurrency.addItem("")
-        self.cb_OutputCurrency.addItem("")
-        self.cb_OutputCurrency.addItem("")
         self.cb_OutputCurrency.setObjectName(u"cb_OutputCurrency")
 
         self.formLayout_2.setWidget(1, QFormLayout.LabelRole, self.cb_OutputCurrency)
@@ -138,7 +132,7 @@ class Ui_mw_Main(object):
 
         self.retranslateUi(mw_Main)
 
-        self.cb_OutputCurrency.setCurrentIndex(1)
+        self.cb_OutputCurrency.setCurrentIndex(-1)
         self.pb_Convert.setDefault(False)
 
 
@@ -149,10 +143,6 @@ class Ui_mw_Main(object):
         mw_Main.setWindowTitle(QCoreApplication.translate("mw_Main", u"Currency Convertor", None))
         self.groupBox.setTitle(QCoreApplication.translate("mw_Main", u"Input", None))
         self.label.setText(QCoreApplication.translate("mw_Main", u"Currency", None))
-        self.cb_InputCurrency.setItemText(0, QCoreApplication.translate("mw_Main", u"CZK", None))
-        self.cb_InputCurrency.setItemText(1, QCoreApplication.translate("mw_Main", u"EUR", None))
-        self.cb_InputCurrency.setItemText(2, QCoreApplication.translate("mw_Main", u"USD", None))
-
         self.label_2.setText(QCoreApplication.translate("mw_Main", u"Amount", None))
         self.le_InputValue.setInputMask("")
         self.le_InputValue.setText("")
@@ -160,11 +150,7 @@ class Ui_mw_Main(object):
         self.groupBox_2.setTitle(QCoreApplication.translate("mw_Main", u"Output", None))
         self.label_3.setText(QCoreApplication.translate("mw_Main", u"Currency", None))
         self.label_4.setText(QCoreApplication.translate("mw_Main", u"Amount", None))
-        self.cb_OutputCurrency.setItemText(0, QCoreApplication.translate("mw_Main", u"CZK", None))
-        self.cb_OutputCurrency.setItemText(1, QCoreApplication.translate("mw_Main", u"EUR", None))
-        self.cb_OutputCurrency.setItemText(2, QCoreApplication.translate("mw_Main", u"USD", None))
-
-        self.cb_OutputCurrency.setCurrentText(QCoreApplication.translate("mw_Main", u"EUR", None))
+        self.cb_OutputCurrency.setCurrentText("")
         self.pb_Convert.setText(QCoreApplication.translate("mw_Main", u"Convert", None))
         self.l_Message.setText(QCoreApplication.translate("mw_Main", u"Waiting for input", None))
     # retranslateUi

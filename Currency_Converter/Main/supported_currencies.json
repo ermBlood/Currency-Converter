@@ -1,7 +1,7 @@
 {
-"EUR": {"name": "Euro", "variants": ["EUR", "EURO", "€"]},
-"USD": {"name": "US Dollar", "variants": ["USD", "US Dollar", "$"]},
-"JPY": {"name": "Japanese Yen", "variants": ["JPY", "Japanese Yen", "¥"]},
-"BGN": {"name": "Bulgarian Lev", "variants": ["BGN", "Bulgarian Lev", "лев"]},
-"CZK": {"name": "Czech Republic Koruna", "variants": ["CZK", "Czech Republic Koruna", "K", "ESKCH KORUN"]}
+"CZK": {"name": "Czech Republic Koruna", "symbols": ["CZK", "CZECH REPUBLIC KORUNA", "KČ", "ČESKÝCH KORUN"]},
+"EUR": {"name": "Euro", "symbols": ["EUR", "EURO", "€"]},
+"USD": {"name": "US Dollar", "symbols": ["USD", "US Dollar", "$"]},
+"JPY": {"name": "Japanese Yen", "symbols": ["JPY", "Japanese Yen", "¥"]},
+"BGN": {"name": "Bulgarian Lev", "symbols": ["BGN", "Bulgarian Lev", "лев"]}
 }
